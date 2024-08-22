@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}" />
     <script src="{{ asset('assets/js/alpine.min.js') }}"></script>
     <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+    <script src="{{ asset('assets/js/focus-trap.js') }}"></script>
     <title>{{ $title }} | Inventory</title>
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">

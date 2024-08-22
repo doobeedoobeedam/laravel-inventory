@@ -7,17 +7,11 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\IncomingItemController;
 use App\Http\Controllers\OutgoingItemController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
@@ -44,6 +38,7 @@ Route::post('/items/outgoing', [OutgoingItemController::class, 'store'])->name('
 Route::delete('/items/outgoing/{item}', [OutgoingItemController::class, 'destroy'])->name('outgoingItems.destroy');
 
 Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

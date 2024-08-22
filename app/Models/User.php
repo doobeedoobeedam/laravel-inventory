@@ -18,7 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
     ];
 
@@ -31,6 +31,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function getAuthIdentifierName() {
+        return 'username';
+    }
+
+    public function findForPassport($username) {
+        return $this->where('username', $username)->first();
+    }
 
     /**
      * Get the attributes that should be cast.
