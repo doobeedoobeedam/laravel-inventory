@@ -4,7 +4,7 @@
 
     <div class="w-full flex items-center justify-between my-6">
         <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Add New Supplier</h2>
-        <a href="/suppliers" class="px-3 py-2 text-xs font-medium transition-colors duration-150 text-teal-500 bg-white border dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 rounded-md cursor-pointer">
+        <a href="/suppliers" class="px-3 py-2 text-xs font-medium transition-colors duration-150 text-teal-500 bg-white border dark:bg-gray-700 dark:text-gray-200 dark:border-gray-700 rounded-md cursor-pointer">
             Back
         </a>
     </div>

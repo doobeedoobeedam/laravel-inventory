@@ -7,6 +7,8 @@ use App\Models\OutgoingItem;
 use App\Models\Supplier;
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use App\Exports\OutgoingItemExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OutgoingItemController extends Controller {
     public function index() {
@@ -14,6 +16,11 @@ class OutgoingItemController extends Controller {
             'title' => 'Outgoing Items',
             'outgoingItems' => OutgoingItem::all()
         ]);
+    }
+
+    public function exportExcel() {
+        $outgoingItems = OutgoingItem::with(['item'])->select('item_code', 'date_of_exit', 'quantity_exited', 'purpose')->get();
+        return Excel::download(new OutgoingItemExport($outgoingItems), 'outgoingitems_report.xlsx');
     }
 
     public function create() {

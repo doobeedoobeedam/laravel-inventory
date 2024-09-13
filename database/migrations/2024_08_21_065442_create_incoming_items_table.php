@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('item_code');
             $table->date('date_of_entry');
             $table->integer('quantity_entered');
-            $table->string('supplier_code');
+            $table->string('supplier_code')->nullable();;
             $table->timestamps();
     
             $table->foreign('item_code')->references('item_code')->on('items')->onDelete('cascade');

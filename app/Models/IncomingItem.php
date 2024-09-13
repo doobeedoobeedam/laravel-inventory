@@ -29,6 +29,22 @@ class IncomingItem extends Model {
             if ($stock) {
                 $stock->quantity_of_incoming_items -= $incomingItem->quantity_entered;
                 $stock->total_items -= $incomingItem->quantity_entered;
+
+                $outgoingItems = OutgoingItem::where('item_code', $incomingItem->item_code)->get();
+
+                foreach ($outgoingItems as $outgoingItem) {
+                    $stock->quantity_of_outgoing_items -= $outgoingItem->quantity_exited;
+                    $stock->total_items -= $outgoingItem->quantity_exited;
+
+                    $outgoingItem->delete();
+                }
+
+                if ($stock->quantity_of_incoming_items < 0 || $stock->total_items < 0 || $stock->quantity_of_outgoing_items < 0) {
+                    $stock->quantity_of_incoming_items = 0;
+                    $stock->quantity_of_outgoing_items = 0;
+                    $stock->total_items = 0;
+                }
+
                 $stock->save();
             }
         });

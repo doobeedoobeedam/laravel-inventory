@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Exports\SuppliersExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SupplierController extends Controller {
     public function index() {
@@ -11,6 +13,10 @@ class SupplierController extends Controller {
             'title' => 'Suppliers',
             'suppliers' => Supplier::all()
         ]);
+    }
+
+    public function exportExcel() {
+        return Excel::download(new SuppliersExport, 'suppliers_report.xlsx');
     }
 
     public function create() {

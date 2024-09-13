@@ -7,6 +7,8 @@ use App\Models\IncomingItem;
 use App\Models\Stock;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use App\Exports\IncomingItemExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IncomingItemController extends Controller {
     public function index() {
@@ -14,6 +16,11 @@ class IncomingItemController extends Controller {
             'title' => 'Incoming Items',
             'incomingItems' => IncomingItem::with('item', 'supplier')->get(),
         ]);
+    }
+
+    public function exportExcel() {
+        $incomingItems = IncomingItem::with(['item', 'supplier'])->select('item_code', 'date_of_entry', 'quantity_entered', 'supplier_code')->get();
+        return Excel::download(new IncomingItemExport($incomingItems), 'incomingitems_report.xlsx');
     }
 
     public function create() {

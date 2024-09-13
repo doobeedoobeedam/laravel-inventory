@@ -4,9 +4,16 @@
 
     <div class="w-full flex items-center justify-between my-6">
         <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Incoming Items</h2>
-        <a href="/items/incoming/create" class="px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md cursor-pointer hover:bg-teal-700">
-            Add New Incoming Item
-        </a>
+        @if (Auth::check() && Auth::user()->is_admin === 1)
+        <div class="flex items-center gap-3">
+            <a href="{{ route('incomingItems.excel') }}" class="mr-2 px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md cursor-pointer">
+                Download Report
+            </a>
+            <a href="/items/incoming/create" class="px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md cursor-pointer hover:bg-teal-700">
+                Add New Incoming Item
+            </a>
+        </div> 
+        @endif
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-6">
@@ -18,7 +25,9 @@
                         <th class="px-4 py-3">Date of Entry</th>
                         <th class="px-4 py-3">Quantity Entered</th>
                         <th class="px-4 py-3">Supplier Name</th>
+                        @if (Auth::check() && Auth::user()->is_admin === 1)
                         <th class="px-4 py-3">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -34,8 +43,9 @@
                                 {{ $item['quantity_entered'] }}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{ $item->supplier['supplier_name'] }}
+                                {{ $item->supplier['supplier_name'] ?? '-' }}
                             </td>
+                            @if (Auth::check() && Auth::user()->is_admin === 1)
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <form action="{{ route('incomingItems.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this item?');">
@@ -49,6 +59,7 @@
                                     </form>                                
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @empty
                         <tr class="text-gray-700 dark:text-gray-400 text-center">

@@ -11,16 +11,16 @@ class SupplierSeeder extends Seeder {
         $suppliers = [
             [
                 'supplier_code' => 'SUP001',
-                'supplier_name' => 'Supplier One',
-                'supplier_address' => '123 Main St, City A',
+                'supplier_name' => 'PT. Prima Jaya',
+                'supplier_address' => 'Jl. Sudirman No. 10, Jakarta Pusat',
                 'supplier_phone' => '081234567890',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'supplier_code' => 'SUP002',
-                'supplier_name' => 'Supplier Two',
-                'supplier_address' => '456 Side St, City B',
+                'supplier_name' => 'CV. Maju Sejahtera',
+                'supplier_address' => 'Jl. Gatot Subroto No. 45, Jakarta',
                 'supplier_phone' => '081298765432',
                 'created_at' => now(),
                 'updated_at' => now(),

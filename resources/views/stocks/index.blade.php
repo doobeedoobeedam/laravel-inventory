@@ -4,6 +4,9 @@
 
     <div class="w-full flex items-center justify-between my-6">
         <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Stocks</h2>
+        <a href="{{ route('stocks.excel') }}" class="mr-2 px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md cursor-pointer">
+            Download Report
+        </a>
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-6">

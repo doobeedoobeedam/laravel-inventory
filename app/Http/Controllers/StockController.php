@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use App\Exports\StockExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller {
     public function index() {
@@ -13,6 +15,12 @@ class StockController extends Controller {
             'stocks' => $stocks
         ]);
     }
+
+    public function exportExcel() {
+        $stocks = Stock::with(['item'])->select('item_code', 'quantity_of_incoming_items', 'quantity_of_outgoing_items', 'total_items')->get();
+        return Excel::download(new StockExport($stocks), 'stocks_report.xlsx');
+    }
+
 
     /**
      * Show the form for creating a new resource.

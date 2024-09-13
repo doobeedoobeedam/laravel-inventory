@@ -1,66 +1,115 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Inventory App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel Inventory App is designed to manage and track inventory items within an organization. It provides functionalities for item management, supplier management, and handling incoming and outgoing items. The app includes features for generating reports and tracking stock levels.
 
-## About Laravel
+## Technology Stack
+- **PHP**: Programming language for server-side logic.
+- **Laravel**: PHP framework for web application development.
+- **TailwindCSS**: CSS library for creating modern, responsive designs with utility classes.
+- **Windmill Template**: Dashboard template used for the app's UI.
+- **Visual Studio Code**: Text editor used for development.
+- **SQLite**: Database used for local development and testing.
+- **PhpSpreadsheet**: A library used for handling and generating spreadsheet files.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Database Schema
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Items
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Column Name      | Data Type | Constraints              | Description                       |
+|------------------|-----------|--------------------------|-----------------------------------|
+| `id`             | `integer`  | Primary Key, Auto Increment | Unique identifier for each item  |
+| `item_code`      | `string`   | Unique, Not Null         | Unique code for each item         |
+| `item_name`      | `string`   | Not Null                 | Name of the item                  |
+| `specification`  | `string`   |                          | Details about the item            |
+| `item_location`  | `string`   |                          | Location where item is stored     |
+| `category`       | `string`   |                          | Category of the item              |
+| `condition`      | `string`   |                          | Condition of the item             |
+| `item_type`      | `string`   |                          | Type of the item                  |
+| `funding_source` | `string`   |                          | Source of funding for the item    |
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Suppliers
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+| Column Name      | Data Type | Constraints              | Description                      |
+|------------------|-----------|--------------------------|----------------------------------|
+| `id`             | `integer`  | Primary Key, Auto Increment | Unique identifier for each supplier |
+| `supplier_code`  | `string`   | Unique, Not Null         | Unique code for each supplier    |
+| `supplier_name`  | `string`   | Not Null                 | Name of the supplier             |
+| `supplier_phone`          | `string`   |                          | Phone number of the supplier     |
+| `supplier_address`        | `string`   |                          | Address of the supplier          |
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Incoming Items
 
-## Laravel Sponsors
+| Column Name          | Data Type | Constraints              | Description                                   |
+|----------------------|-----------|--------------------------|-----------------------------------------------|
+| `id`                 | `integer` | Primary Key, Auto Increment | Unique identifier for each incoming item    |
+| `item_code`          | `string`  | Foreign Key              | Code of the item being added                |
+| `date_of_entry`      | `date`    | Not Null                 | Date when the item was entered              |
+| `quantity_entered`   | `integer` | Not Null                 | Quantity of items entered                   |
+| `supplier_code`      | `string`  | Foreign Key              | Code of the supplier providing the items    |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Outgoing Items
 
-### Premium Partners
+| Column Name         | Data Type | Constraints              | Description                                  |
+|---------------------|-----------|--------------------------|----------------------------------------------|
+| `id`                | `integer` | Primary Key, Auto Increment | Unique identifier for each outgoing item |
+| `item_code`         | `string`  | Foreign Key              | Code of the item being removed              |
+| `date_of_exit`      | `date`    | Not Null                 | Date when the item was removed              |
+| `quantity_exited`   | `integer` | Not Null                 | Quantity of items removed                   |
+| `purpose`           | `string`  |                          | Purpose for which items are removed         |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Stocks
 
-## Contributing
+| Column Name                | Data Type | Constraints              | Description                                  |
+|----------------------------|-----------|--------------------------|----------------------------------------------|
+| `item_code`                | `string`   | Foreign Key, Primary Key, Not Null    | Unique identifier for each record                            |
+| `quantity_of_incoming_items` | `integer` |                          | Total quantity of incoming items            |
+| `quantity_of_outgoing_items` | `integer` |                          | Total quantity of outgoing items            |
+| `total_items`              | `integer`  |                          | Total quantity of items in stock            |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Screenshots
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Login
 
-## Security Vulnerabilities
+![login](./.pict/login.jpeg)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Dashboard
 
-## License
+![dashboard](./.pict/dashboard.jpeg)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<img src="./.pict/mobile-dashboard.png" alt="mobile-dashboard" width="300"/> 
+<img src="./.pict/mobile-menu.png" alt="mobile-menu" width="300"/>
+
+### Users
+
+![users](./.pict/users.jpeg)
+
+### Suppliers
+
+![suppliers](./.pict/suppliers.jpeg)
+
+### Items
+
+![items](./.pict/items.jpeg)
+
+### Incoming Items
+
+![incoming-items](./.pict/incoming-items.jpeg)
+
+### Outgoing Items
+
+![outgoing-items](./.pict/outgoing-items.jpeg)
+
+### Stocks
+
+![stocks](./.pict/stocks.jpeg)
+
+### Form + Validation
+
+![form](./.pict/form.jpeg)
+
+![form-validation](./.pict/form-validation.jpeg)
+
+### Report.xlsx
+![report](./.pict/report.png)

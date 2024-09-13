@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Stock;
+use App\Exports\ItemsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ItemController extends Controller {
     public function index() {
@@ -12,6 +14,10 @@ class ItemController extends Controller {
             'title' => 'Items',
             'items' => Item::all()
         ]);
+    }
+
+    public function exportExcel() {
+        return Excel::download(new ItemsExport, 'items_report.xlsx');
     }
 
     public function create() {

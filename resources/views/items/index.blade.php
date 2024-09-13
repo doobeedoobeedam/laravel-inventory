@@ -4,9 +4,14 @@
 
     <div class="w-full flex items-center justify-between my-6">
         <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">Items</h2>
-        <a href="/items/create" class="px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md cursor-pointer hover:bg-teal-700">
-            New Item
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('items.excel') }}" class="mr-2 px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md cursor-pointer">
+                Download Report
+            </a>
+            <a href="/items/create" class="px-3 py-2 text-xs font-medium text-white transition-colors duration-150 bg-teal-600 border border-transparent rounded-md cursor-pointer hover:bg-teal-700">
+                New Item
+            </a>
+        </div>  
     </div>
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs mb-6">
@@ -21,7 +26,9 @@
                         <th class="px-4 py-3">Condition</th>
                         <th class="px-4 py-3">Item Type</th>
                         <th class="px-4 py-3">Funding Source</th>
+                        @if (Auth::check() && Auth::user()->is_admin === 1)
                         <th class="px-4 py-3">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -48,6 +55,7 @@
                             <td class="px-4 py-3 text-sm">
                                 {{ $item['funding_source'] }}
                             </td>
+                            @if (Auth::check() && Auth::user()->is_admin === 1)
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <a href="/items/{{ $item['item_code'] }}/edit" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-teal-500 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray" aria-label="Edit">
@@ -66,6 +74,7 @@
                                     </form>                                
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @empty
                         <tr class="text-gray-700 dark:text-gray-400 text-center">
